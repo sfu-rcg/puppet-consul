@@ -34,6 +34,22 @@ class consul::config(
         }
       }
       'systemd' : {
+        if $consul::gomaxprocs == undef {
+          $gomaxprocs_source = inline_template("<%= @processorcount.to_i %>")
+          if $config_hash['server'] == true {
+            if $gomaxprocs_source > 2 {
+              $gomaxprocs = $gomaxprocs_source
+            } else {
+              $gomaxprocs = 2
+            }
+          }
+          else {
+            $gomaxprocs = 2
+          }
+        } else {
+          $gomaxprocs = $consul::gomaxprocs
+        }
+
         file { '/lib/systemd/system/consul.service':
           mode    => '0644',
           owner   => 'root',

@@ -70,6 +70,7 @@ class consul (
   $watches               = {},
   $checks                = {},
   $acls                  = {},
+  $gomaxprocs            = undef,
 ) inherits consul::params {
 
   $real_download_file = "${version}_${os}_${arch}.${download_extension}"
