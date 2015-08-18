@@ -49,7 +49,7 @@ class consul::install {
       } ->
       staging::extract { $consul::real_download_file:
         target => $consul::bin_dir,
-        unless => "which consul > /dev/null ; if [ $? = 0 ]; then test `consul version | grep -m1 -o [0-9\\.] | tr -d '\\n'` = ${consul::version}; unlessval=$?; if [ \$unlessval = 1 ]; then ${clean_staging_dir}; ${ruby_service_stop}; rm -f ${consul::bin_dir}/consul; fi; else unlessval=1; fi; test \$unlessval = 0",
+        unless => "test -f ${consul::bin_dir}/consul; if [ $? = 0 ]; then test `consul version | grep -m1 -o [0-9\\.] | tr -d '\\n'` = ${consul::version}; unlessval=$?; if [ \$unlessval = 1 ]; then ${clean_staging_dir}; ${ruby_service_stop}; rm -f ${consul::bin_dir}/consul; fi; else unlessval=1; fi; test \$unlessval = 0",
       } ->
       file { "${consul::bin_dir}/consul":
         owner => 'root',
