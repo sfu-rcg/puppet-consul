@@ -11,6 +11,7 @@ class consul::reload_service {
     path        => [$consul::bin_dir,'/bin','/usr/bin'],
     command     => 'consul reload',
     refreshonly => true,
+    user        => $consul::user,
   }
 
 }
