@@ -122,6 +122,11 @@ class consul (
   if $acls {
     create_resources(consul_acl, $acls)
   }
+  if $config_hash['client_addr'] {
+    $client_addr = $config_hash['client_addr']
+  } else {
+    $client_addr = '127.0.0.1'
+  }
 
   anchor {'consul_first': }
   ->

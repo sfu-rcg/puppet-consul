@@ -9,7 +9,7 @@ class consul::reload_service {
 
   exec { 'reload consul service':
     path        => [$consul::bin_dir,'/bin','/usr/bin'],
-    command     => 'consul reload',
+    command     => "consul reload -rpc-addr=${consul::client_addr}:8400",
     refreshonly => true,
     user        => $consul::user,
   }
